@@ -1,0 +1,19 @@
+{
+  "name": "users-api",
+  "version": "1.0.0",
+  "description": "Basic User API to test",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bswaika96/serverless-stack-boilerplate.git"
+  },
+  "author": "Baladitya Swaika",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bswaika96/serverless-stack-boilerplate/issues"
+  },
+  "homepage": "https://github.com/bswaika96/serverless-stack-boilerplate#readme"
+}

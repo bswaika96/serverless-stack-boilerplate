@@ -1,0 +1,47 @@
+service: users-api
+app: boilerplate
+org: bswaika
+
+frameworkVersion: "2"
+
+custom: ${file(../../shared/serverless.shared.yml):custom}
+
+plugins:
+  - serverless-bundle
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+  lambdaHashingVersion: 20201221
+
+  profile: personal-dev-profile
+  stage: dev
+  region: ap-south-1
+
+  apiGateway:
+    restApiId: !ImportValue "APIGateway-${self:custom.identifier}-RestApiId"
+    description: Users API
+    restApiResources:
+      /users: !ImportValue "APIGateway-${self:custom.identifier}-UsersServiceResourceId"
+
+  iamRoleStatements: ${file(../../shared/serverless.shared.yml):permissions}
+
+  environment:
+    stage: ${self:custom.stage}
+    TableName: !ImportValue "DynamoTable-${self:custom.identifier}-TableName"
+    BucketName: !ImportValue "StorageBucket-${self:custom.identifier}-BucketName"
+
+functions:
+  getUsers:
+    handler: ./endpoints/getUsers.handler
+    events:
+      - http:
+          path: /users
+          method: get
+          cors: true

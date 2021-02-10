@@ -1,0 +1,26 @@
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+  identifier: ${self:app}-${self:custom.stage}-${self:custom.region}
+
+permissions:
+  - Effect: Allow
+    Action:
+      - dynamodb:Scan
+      - dynamodb:Query
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+      - dynamodb:DescribeTable
+    Resource:
+      - !ImportValue "DynamoTable-${self:custom.identifier}-TableArn"
+  - Effect: Allow
+    Action:
+      - s3:GetObject
+      - s3:ListBucket
+      - s3:PutObject
+      - s3:PutObjectAcl
+      - s3:DeleteObject
+    Resource:
+      - !ImportValue "StorageBucket-${self:custom.identifier}-BucketArn"
