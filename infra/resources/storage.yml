@@ -2,7 +2,7 @@ Resources:
   StorageBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: StorageBucket-${self:custom.identifier}
+      BucketName: storage-bucket-${self:custom.identifier}
 
 Outputs:
   StorageBucketName:
