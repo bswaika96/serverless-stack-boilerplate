@@ -1,0 +1,31 @@
+Resources:
+  Database:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "partitionKey"
+          AttributeType: "S"
+        - AttributeName: "sortKey"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "partitionKey"
+          KeyType: HASH
+        - AttributeName: "sortKey"
+          KeyType: RANGE
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      TableName: DynamoTable-${self:custom.identifier}
+
+Outputs:
+  DatabaseTableName:
+    Value: !Ref Database
+    Export:
+      Name: DynamoTable-${self:custom.identifier}-TableName
+  DatabaseTableArn:
+    Value: !GetAtt
+      - Database
+      - Arn
+    Export:
+      Name: DynamoTable-${self:custom.identifier}-TableArn

@@ -1,0 +1,25 @@
+service: infra
+app: boilerplate
+org: bswaika
+
+frameworkVersion: "2"
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self.provider.region}
+  identifier: ${self:app}-${self:custom.stage}-${self:custom.region}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+  lambdaHashingVersion: 20201221
+
+  profile: personal-dev-profile
+  stage: dev
+  region: ap-south-1
+
+resources:
+  - ${file(./resources/apigw.yml)}
+  - ${file(./resources/db.yml)}
+  - ${file(./resources/storage.yml)}

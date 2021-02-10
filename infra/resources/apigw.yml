@@ -1,0 +1,29 @@
+Resources:
+  APIGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: APIGateway-${self:custom.identifier}
+  UsersServiceResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref APIGateway
+      ParentId: !GetAtt
+        - APIGateway
+        - RootResourceId
+      PathPart: users
+
+Outputs:
+  APIGatewayRestApiId:
+    Value: !Ref APIGateway
+    Export:
+      Name: APIGateway-${self:custom.identifier}-RestApiId
+  APIGatewayRootResourceId:
+    Value: !GetAtt
+      - APIGateway
+      - RootResourceId
+    Export:
+      Name: APIGateway-${self:custom.identifier}-RootResourceId
+  UsersServiceResourceId:
+    Value: !Ref UsersServiceResource
+    Export:
+      Name: APIGateway-${self:custom.identifier}-UsersServiceResourceId
