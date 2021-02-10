@@ -6,7 +6,7 @@ frameworkVersion: "2"
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  region: ${opt:region, self.provider.region}
+  region: ${opt:region, self:provider.region}
   identifier: ${self:app}-${self:custom.stage}-${self:custom.region}
 
 provider:
