@@ -1,6 +1,7 @@
-import APIResponse from './APIResponse';
-import APIRequest from './APIRequest';
-import AuthProvider from './AuthProvider';
+import APIResponse from './api/APIResponse';
+import APIRequest from './api/APIRequest';
+import AuthProvider from './auth/AuthProvider';
+import AuthEntityLoader from './auth/AuthEntityLoader';
 
 
 export default function handler(lambda, options = undefined){
@@ -17,7 +18,8 @@ export default function handler(lambda, options = undefined){
              * options = {
              *      auth: true,
              *      authAdmin: <firebase admin object passed from the service>
-             *      authEntity: <Entity that needs to be authenticated>
+             *      authEntity: <Entity that needs to be authenticated>,
+             *      loadAuthEntity: true
              * }
              * 
              */
@@ -25,6 +27,9 @@ export default function handler(lambda, options = undefined){
             if(options){
                 if(options.auth){
                     await new AuthProvider(options.authAdmin, options.authEntity).authenticate(request);
+                    if(options.loadAuthEntity){
+                        await new AuthEntityLoader(options.authEntity).loadEntity(request);
+                    }
                 }
             }
 

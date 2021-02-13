@@ -1,4 +1,4 @@
-import {AuthenticationError, BadRequestError} from './AppErrors';
+import {AuthenticationError, BadRequestError} from '../errors/AppErrors';
 
 export default class AuthProvider{
     constructor(authAdmin, entity){
