@@ -33,16 +33,16 @@ export class ValidationError extends AppError{
 }
 
 export class AuthenticationError extends AppError{
-    constructor(resource){
+    constructor(entity){
         super(401, 'Authentication Error');
-        this.resource = resource;
+        this.entity = entity;
     }
 
     getResponse(){
         return {
             code: this.status,
             message: this.message,
-            resource: this.resource
+            entity: this.entity
         }
     }
 }
