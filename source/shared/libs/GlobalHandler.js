@@ -19,7 +19,9 @@ export default function handler(lambda, options = undefined){
              *      auth: true,
              *      authAdmin: <firebase admin object passed from the service>
              *      authEntity: <Entity that needs to be authenticated>,
-             *      loadAuthEntity: true
+             *      loadAuthEntity: true,
+             *      authEntityTableName: <required when loadAuthEntity is true; table name string passed from the service>
+             *      databaseClient: <required when loadAuthEntity is true;  datatbase client object passed from the service>
              * }
              * 
              */
@@ -28,7 +30,7 @@ export default function handler(lambda, options = undefined){
                 if(options.auth){
                     await new AuthProvider(options.authAdmin, options.authEntity).authenticate(request);
                     if(options.loadAuthEntity){
-                        await new AuthEntityLoader(options.authEntity).loadEntity(request);
+                        await new AuthEntityLoader(options.databaseClient, options.authEntityTableName, options.authEntity).loadEntity(request);
                     }
                 }
             }

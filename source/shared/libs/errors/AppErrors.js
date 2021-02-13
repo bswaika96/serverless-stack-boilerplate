@@ -47,6 +47,21 @@ export class AuthenticationError extends AppError{
     }
 }
 
+export class ResourceNotFoundError extends AppError{
+    constructor(resource){
+        super(404, 'Resource Not Found Error');
+        this.resource = resource;
+    }
+
+    getResponse(){
+        return {
+            code: this.status,
+            message: this.message,
+            resource: this.resource
+        }
+    }
+}
+
 export class BadRequestError extends AppError{
     constructor(issue){
         super(400, 'Bad Request Error');

@@ -1,4 +1,5 @@
 import {AuthenticationError, BadRequestError} from '../errors/AppErrors';
+import {formatJSON} from '../utils/JSON';
 
 export default class AuthProvider{
     constructor(authAdmin, entity){
@@ -13,6 +14,7 @@ export default class AuthProvider{
             request.addProp('firebaseId', decodedToken.uid);
             return;
         }catch(error){
+            console.error(formatJSON(error));
             throw new AuthenticationError(this.entity);
         }
     }
