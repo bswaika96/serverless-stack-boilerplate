@@ -10,14 +10,16 @@ export default function handler(lambda, options = undefined){
         try{
             const request = new APIRequest(event, context);
             
-            // Options Object Processing
-            // Currently expects optionally
             /**
+             * Options Object Processing
+             * Currently expects optionally
+             * 
              * options = {
              *      auth: true,
              *      authAdmin: <firebase admin object passed from the service>
              *      authEntity: <Entity that needs to be authenticated>
              * }
+             * 
              */
 
             if(options){
