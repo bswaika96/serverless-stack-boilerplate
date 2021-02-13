@@ -7,6 +7,15 @@ export default class APIRequest{
         if(context.clientContext){
             this.clientContext = context.clientContext;
         }
+        this._props = {};
+    }
+
+    addProp(property, value){
+        this._props[property] = value;
+    }
+
+    getProp(property){
+        return this._props[property] ? this._props[property] : undefined;
     }
 
     hasClientContext(){
@@ -23,6 +32,10 @@ export default class APIRequest{
 
     hasHeaders(){
         return this.headers ? true : false;
+    }
+
+    hasAuthHeader(){
+        return this.hasHeaders() ? (this.headers.Authorization && typeof this.headers.Authorization === 'string' ? true : false): false; 
     }
 
     hasQuery(){

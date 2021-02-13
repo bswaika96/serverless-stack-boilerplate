@@ -9,6 +9,7 @@ export default class APIResponse{
         }
         this.body = JSON.stringify(body);
         this.headers = {
+            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': true
         };
