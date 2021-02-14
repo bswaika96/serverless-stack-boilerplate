@@ -1,0 +1,404 @@
+openapi: 3.0.0
+
+servers:
+  - url: https://api.boilerplate.com/v1
+
+info:
+  description: |-
+    Boilerplate Backend Server REST API.
+
+    *Features Include:*
+      - User CRUD
+      - More coming soon...
+
+    Copyright 2021. Baladitya Swaika. All Rights Reserved.
+  version: "1.0.0"
+  title: Boilerplate API Docs
+  contact:
+    email: bswaika96@gmail.com
+    name: Baladitya Swaika
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+tags:
+  - name: users
+    description: |
+      **Users API:**
+      This resource represents an individual user in the system.
+      Each user is identified by a nanoid `userId` and a `firebaseId`.
+      `userId` is generated on the server, whereas `firebaseId` is generated
+      by firebase authentication.
+
+paths:
+  /users:
+    summary: User Resource Routes
+
+    get:
+      tags:
+        - users
+      summary: Fetch an User
+      security:
+        - FirebaseAuth: []
+      responses:
+        "200":
+          description: Returns an User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Error401"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "500":
+          $ref: "#/components/responses/Error500"
+        "520":
+          $ref: "#/components/responses/Error520"
+
+    post:
+      tags:
+        - users
+      summary: Create an User
+      requestBody:
+        $ref: "#/components/requestBodies/EntityCreate"
+      responses:
+        "201":
+          description: Creates an User in the Database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        format: nanoid
+                        example: "xDe12as51F"
+        "406":
+          $ref: "#/components/responses/Error406"
+        "500":
+          $ref: "#/components/responses/Error500"
+        "520":
+          $ref: "#/components/responses/Error520"
+
+  /users/{userId}:
+    summary: User Resource Routes
+
+    patch:
+      tags:
+        - users
+      summary: Update an User
+      security:
+        - FirebaseAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "System-generated userId"
+          schema:
+            type: string
+          required: true
+      requestBody:
+        $ref: "#/components/requestBodies/EntityUpdate"
+      responses:
+        "200":
+          description: Returns the updated User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Error401"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "406":
+          $ref: "#/components/responses/Error406"
+        "500":
+          $ref: "#/components/responses/Error500"
+        "520":
+          $ref: "#/components/responses/Error520"
+
+    delete:
+      tags:
+        - users
+      summary: Delete an User
+      security:
+        - FirebaseAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: "System-generated userId"
+          schema:
+            type: string
+          required: true
+      responses:
+        "204":
+          description: Deletes the User from the database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "401":
+          $ref: "#/components/responses/Error401"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "500":
+          $ref: "#/components/responses/Error500"
+        "520":
+          $ref: "#/components/responses/Error520"
+
+components:
+  securitySchemes:
+    FirebaseAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    User:
+      type: object
+      required:
+        - partitionKey
+        - sortKey
+        - userId
+        - firebaseId
+        - name
+        - email
+        - phone
+      properties:
+        partitionKey:
+          type: string
+          example: "Firebase:{firebaseId}"
+        sortKey:
+          type: string
+          example: "::User:{userId}"
+        userId:
+          type: string
+          format: nanoid
+          example: "xDe12as51F"
+          maxLength: 10
+        firebaseId:
+          type: string
+          format: firebaseid
+          example: "Firebase Auth Id"
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "johndoe@example.com"
+        phone:
+          type: string
+          example: "+919876543210"
+        address:
+          type: string
+          example: "24, Dover Lane, Kolkata"
+        pin:
+          type: string
+          example: "700156"
+        state:
+          type: string
+          example: "West Bengal"
+        geoHash:
+          type: string
+          format: geoHash
+          example: "cd32d15"
+        createdAt:
+          type: string
+          format: ISOStringDate
+          example:
+            $ref: "#/components/examples/date/value"
+        updatedAt:
+          type: string
+          format: ISOStringDate
+          example:
+            $ref: "#/components/examples/date/value"
+        version:
+          type: integer
+          example: 0
+
+  requestBodies:
+    EntityCreate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - firebaseId
+              - name
+              - email
+              - phone
+            properties:
+              firebaseID:
+                type: string
+                format: firebaseid
+                example: "Firebase Auth ID"
+              name:
+                type: string
+                example: "John Doe"
+              email:
+                type: string
+                example: "johndoe@example.com"
+              phone:
+                type: string
+                example: "+919876543210"
+
+    EntityUpdate:
+      description: |
+        No attribute is required. Only populate request body with attributes that have
+        been changed. Cannot update **firebaseId** attribute.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "John Doe"
+              email:
+                type: string
+                example: "johndoe@example.com"
+              phone:
+                type: string
+                example: "+919876543210"
+
+  responses:
+    Error401:
+      description: Unauthorized Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "Bad Token"
+                  entity:
+                    type: string
+                    example: "EntityType"
+
+    Error404:
+      description: Requested Resource(s) was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "No Resource(s) Found"
+                  resource:
+                    type: string
+                    example: "ResourceType"
+
+    Error406:
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 406
+                  message:
+                    type: string
+                    example: "Validation Error"
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field:
+                          type: string
+                          example: "name"
+                        code:
+                          type: integer
+                          example: 191
+                        message:
+                          type: string
+                          example: "Name is required."
+
+    Error500:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "Internal Server Error"
+
+    Error520:
+      description: Database Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              error:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 520
+                  message:
+                    type: string
+                    example: "Database Error"
+
+  examples:
+    date:
+      value: "2021-01-01T14:48:00.000Z"

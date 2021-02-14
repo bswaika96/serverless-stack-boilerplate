@@ -4,7 +4,8 @@
   "description": "Docs for Serverless REST API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js -e js,yml"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/bswaika96/serverless-stack-boilerplate/issues"
   },
-  "homepage": "https://github.com/bswaika96/serverless-stack-boilerplate#readme"
+  "homepage": "https://github.com/bswaika96/serverless-stack-boilerplate#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "swagger-ui-express": "^4.1.6",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
