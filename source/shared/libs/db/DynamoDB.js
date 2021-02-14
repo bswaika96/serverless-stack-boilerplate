@@ -29,22 +29,21 @@ export default class DynamoDB {
 }
 
 /**
- * ParamsBuilder Helper - can be optionally 
- *                        used to construct common 
+ * ParamsBuilder Helper - can be optionally
+ *                        used to construct common
  *                        param patterns
- * 
  * This class can either have two types of member functions:
  *      1. builders which implement the pattern logic to manipulate this.params
  *          - should be named build<patternName>Pattern
  *      2. switchers which call appropriate builders and return this.params
- *          - should be name build<operationName>Params 
+ *          - should be name build<operationName>Params
  */
 
 export class ParamsBuilder {
     constructor(tableName){
         this.params = {
             TableName: tableName
-        }
+        };
     }
 
     buildAuthEntityLoaderPattern(data){
@@ -76,12 +75,11 @@ export class ParamsBuilder {
 }
 
 /**
- * DynamoDB Interface Helper - can be used to 
- *                        build and parse 
+ * DynamoDB Interface Helper - can be used to
+ *                        build and parse
  *                        DynamoDB records.
- * 
  * This class expects to be passed in the AWS.DynamoDB.Converter
- * module into its constructor. 
+ * module into its constructor.
  */
 
 export class DynamoDBInterface {
@@ -90,7 +88,7 @@ export class DynamoDBInterface {
         wrapNumbers: false
     }){
         this._converter = Converter;
-        this.options = options
+        this.options = options;
     }
 
     parse(data){

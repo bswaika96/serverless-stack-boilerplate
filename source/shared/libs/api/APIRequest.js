@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 export default class APIRequest{
     constructor(event, context){
         this.body = JSON.parse(event.body);
@@ -27,7 +28,7 @@ export default class APIRequest{
     }
 
     hasBody(){
-        return this.body ? true : false; 
+        return this.body ? true : false;
     }
 
     hasParams(){
@@ -39,10 +40,10 @@ export default class APIRequest{
     }
 
     hasAuthHeader(){
-        return this.hasHeaders() ? (this.headers.Authorization && typeof this.headers.Authorization === 'string' ? true : false): false; 
+        return this.hasHeaders() ? (this.headers.Authorization && typeof this.headers.Authorization === 'string' ? true : false): false;
     }
 
     hasQuery(){
-        return this.query ? true : false; 
+        return this.query ? true : false;
     }
 }

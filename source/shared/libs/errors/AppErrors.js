@@ -13,7 +13,7 @@ export default class AppError extends Error{
         return {
             code: this.status,
             message: this.message
-        }
+        };
     }
 }
 
@@ -28,7 +28,7 @@ export class ValidationError extends AppError{
             code: this.status,
             message: this.message,
             issues: this.issues
-        }
+        };
     }
 }
 
@@ -43,7 +43,7 @@ export class AuthenticationError extends AppError{
             code: this.status,
             message: this.message,
             entity: this.entity
-        }
+        };
     }
 }
 
@@ -58,7 +58,7 @@ export class ResourceNotFoundError extends AppError{
             code: this.status,
             message: this.message,
             resource: this.resource
-        }
+        };
     }
 }
 
@@ -73,6 +73,6 @@ export class BadRequestError extends AppError{
             code: this.status,
             message: this.message,
             issue: this.issue
-        }
+        };
     }
 }

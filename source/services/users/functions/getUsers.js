@@ -16,7 +16,7 @@ const lambda = async(request) => {
     return {
         status: 200,
         data: users
-    }
-}
+    };
+};
 
-export const main = handler(lambda)
+export const main = handler(lambda);

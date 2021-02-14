@@ -28,7 +28,7 @@ provider:
     restApiId: !ImportValue "APIGateway-${self:custom.identifier}-RestApiId"
     description: Users API
     restApiResources:
-      /users: !ImportValue "APIGateway-${self:custom.identifier}-UsersServiceResourceId"
+      users: !ImportValue "APIGateway-${self:custom.identifier}-UsersServiceResourceId"
 
   iamRoleStatements: ${file(../../shared/serverless.shared.yml):permissions}
 
