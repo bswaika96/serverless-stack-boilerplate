@@ -39,7 +39,7 @@ provider:
 
 functions:
   getUsers:
-    handler: ./endpoints/getUsers.handler
+    handler: ./functions/getUsers.main
     events:
       - http:
           path: /users
