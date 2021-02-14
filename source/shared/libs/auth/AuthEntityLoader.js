@@ -1,4 +1,4 @@
-import DynamoDB, {ParamsBuilder, DocumentParser} from '../db/DynamoDB';
+import DynamoDB, {ParamsBuilder} from '../db/DynamoDB';
 import AppError, {ResourceNotFoundError} from '../errors/AppErrors';
 import { formatJSON } from '../utils/JSON';
 
@@ -21,8 +21,10 @@ export default class AuthEntityLoader{
         if(result.Count == 0){
             throw new ResourceNotFoundError(this.entity);
         }
-        const entity = new DocumentParser(result.Items[0]).parse();
+        const entity = result.Items[0];
         entity.entityType = this.entity;
+        entity.isMarshalled = true;
         request.addProp('entity', entity);
+        return;
     }
 }

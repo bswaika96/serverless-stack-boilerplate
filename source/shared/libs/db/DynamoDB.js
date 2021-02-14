@@ -76,37 +76,28 @@ export class ParamsBuilder {
 }
 
 /**
- * Document Parser Helper - can be used to
- *                          parse DynamoDB Attribute Maps
- *                          for Documents
+ * DynamoDB Interface Helper - can be used to 
+ *                        build and parse 
+ *                        DynamoDB records.
+ * 
+ * This class expects to be passed in the AWS.DynamoDB.Converter
+ * module into its constructor. 
  */
 
-export class DocumentParser{
-    constructor(items){
-        this.items = items;
-        this.isArray = Array.isArray(this.items);
+export class DynamoDBInterface {
+    constructor(Converter, options = {
+        convertEmptyValues: false,
+        wrapNumbers: false
+    }){
+        this._converter = Converter;
+        this.options = options
     }
 
-    parse(){
-        result = this.isArray ? [] : {};
-        return result;
-    }
-}
-
-/**
- * Document Builder Helper - can be used to
- *                          build DynamoDB Attribute Maps
- *                          for Documents
- */
-
-export class DocumentBuilder{
-    constructor(items){
-        this.items = items;
-        this.isArray = Array.isArray(this.items);
+    parse(data){
+        return this._converter.unmarshall(data, this.options);
     }
 
-    build(){
-        result = this.isArray ? [] : {};
-        return result;
+    build(data){
+        return this._converter.marshall(data, this.options);
     }
 }
