@@ -5,7 +5,7 @@ const users = [{
     name: 'Baladitya',
     age: 25
 },{
-    name: 'Shweta',
+    name: 'I had to make a change to test CI/CD',
     age: 29
 }];
 
