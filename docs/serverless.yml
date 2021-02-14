@@ -1,0 +1,39 @@
+service: docs
+app: boilerplate
+org: bswaika
+
+frameworkVersion: "2"
+
+custom: ${file(../source/shared/serverless.shared.yml):custom}
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+  lambdaHashingVersion: 20201221
+
+  profile: personal-dev-profile
+  stage: dev
+  region: ap-south-1
+
+  apiGateway:
+    restApiId: !ImportValue "APIGateway-${self:custom.identifier}-RestApiId"
+    description: Docs
+    restApiResources:
+      docs: !ImportValue "APIGateway-${self:custom.identifier}-DocsResourceId"
+
+functions:
+  docs:
+    handler: ./handler.main
+    events:
+      - http:
+          path: /docs
+          method: get
+          cors: true
+      - http:
+          path: /docs/{proxy+}
+          method: any
+          cors: true

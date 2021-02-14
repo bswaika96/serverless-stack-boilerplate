@@ -3,6 +3,14 @@ Resources:
     Type: AWS::ApiGateway::RestApi
     Properties:
       Name: APIGateway-${self:custom.identifier}
+  DocsResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref APIGateway
+      ParentId: !GetAtt
+        - APIGateway
+        - RootResourceId
+      PathPart: docs
   UsersServiceResource:
     Type: AWS::ApiGateway::Resource
     Properties:
@@ -27,3 +35,7 @@ Outputs:
     Value: !Ref UsersServiceResource
     Export:
       Name: APIGateway-${self:custom.identifier}-UsersServiceResourceId
+  DocsResourceId:
+    Value: !Ref DocsResource
+    Export:
+      Name: APIGateway-${self:custom.identifier}-DocsResourceId
