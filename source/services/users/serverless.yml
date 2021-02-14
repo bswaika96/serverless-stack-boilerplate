@@ -1,6 +1,6 @@
 service: users-api
 app: boilerplate
-org: bswaika
+# org: bswaika
 
 frameworkVersion: "2"
 
