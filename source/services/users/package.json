@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/bswaika96/serverless-stack-boilerplate/issues"
   },
-  "homepage": "https://github.com/bswaika96/serverless-stack-boilerplate#readme"
+  "homepage": "https://github.com/bswaika96/serverless-stack-boilerplate#readme",
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
 }
