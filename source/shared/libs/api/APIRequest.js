@@ -10,12 +10,16 @@ export default class APIRequest{
         this._props = {};
     }
 
-    addProp(property, value){
+    setProp(property, value){
         this._props[property] = value;
     }
 
     getProp(property){
         return this._props[property] ? this._props[property] : undefined;
+    }
+
+    removeProp(property){
+        return delete this._props[property];
     }
 
     hasClientContext(){

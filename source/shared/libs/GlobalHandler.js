@@ -2,6 +2,7 @@ import APIResponse from './api/APIResponse';
 import APIRequest from './api/APIRequest';
 import AuthProvider from './auth/AuthProvider';
 import AuthEntityLoader from './auth/AuthEntityLoader';
+import AppError from './errors/AppErrors';
 
 
 export default function handler(lambda, options = undefined){
@@ -42,8 +43,17 @@ export default function handler(lambda, options = undefined){
 
         } catch(error){
             response.success = false;
-            response.responseObject = error.getResponse();
-            status = error.getStatus();
+            if(error instanceof AppError){
+                response.responseObject = error.getResponse();
+                status = error.getStatus();
+            }else{
+                response.responseObject = {
+                    message: 'Internal Server Error',
+                    code: 500,
+                    info: error.message
+                }
+                status = 500;
+            }
         }
 
         return new APIResponse(status, response);

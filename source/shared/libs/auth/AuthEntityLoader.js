@@ -24,7 +24,7 @@ export default class AuthEntityLoader{
         const entity = result.Items[0];
         entity.entityType = this.entity;
         entity.isMarshalled = true;
-        request.addProp('entity', entity);
+        request.setProp('entity', entity);
         return;
     }
 }

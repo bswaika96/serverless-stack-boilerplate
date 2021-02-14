@@ -11,7 +11,7 @@ export default class AuthProvider{
         if(!request.hasAuthHeader()) throw new BadRequestError('Expected `Authorization` Header with Firebase Token');
         try{
             const decodedToken = await this._authAdmin.auth().verifyIdToken(request.headers.Authorization);
-            request.addProp('firebaseId', decodedToken.uid);
+            request.setProp('firebaseId', decodedToken.uid);
             return;
         }catch(error){
             console.error(formatJSON(error));
