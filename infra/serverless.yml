@@ -1,6 +1,6 @@
 service: infra
 app: boilerplate
-# org: bswaika
+org: bswaika
 
 frameworkVersion: "2"
 
