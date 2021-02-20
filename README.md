@@ -31,3 +31,7 @@
 > Note: Needs to changed for every service
 
 > Note: Use `npm install` in every directory where there is `package.json`
+
+---
+
+Copyright© 2021. Baladitya Swaika. All Rights Reserved.
